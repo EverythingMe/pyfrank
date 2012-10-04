@@ -1,4 +1,4 @@
-pyfrank - a python binding for automating iOS applications using frank.
+pyfrank - python binding for iOS automation using frank.
 ==================================================
 
 pyfrank is an API to interact with frank, the iOS automation framework.
