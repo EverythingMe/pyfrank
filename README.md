@@ -88,10 +88,11 @@ UiQuery({'view': 'UIImageView'}, {'marked': 'ProfilePicture'}) # The recommended
 UiQuery(('view', 'UIImageView'), ('marked', 'ProfilePicture))
 UiQuery("view:'UIImageView' marked:'ProfilePicture'")
 UiQuery('imageView', { 'marked': 'ProfilePicture' })
-
-These represent the same ui query: "view:'UIImageView' marked:'ProfilePicture'". 
-We recommend to use the first option as it automatically builds and escapes the appropriate fields to conform with frank's UiQuery specifications.
 ```
+
+####These represent the same ui query: "view:'UIImageView' marked:'ProfilePicture'". 
+####We recommend to use the first option as it automatically builds and escapes the appropriate fields to conform with frank's UiQuery specifications.
+
     
 ###For more info on UiQuery - http://code.google.com/p/uispec/wiki/Documentation#UIQuery
 
