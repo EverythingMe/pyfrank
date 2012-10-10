@@ -84,6 +84,9 @@ class Response(object):
         """
         return self._data.get(key, default)
 
+    def raw(self):
+        return self._data
+
     def outcome(self):
         return self.get('outcome')
 
@@ -147,7 +150,7 @@ class Dump(Response):
     Represents the entire application UI graph
     """
     def __str__(self):
-        return str(self.outcome())
+        return str(self._data)
 
     @staticmethod
     def parse(data):
@@ -417,7 +420,7 @@ class Device(object):
 
         Returns dict
         """
-        return Request(self).dump().outcome()
+        return Request(self).dump().raw()
 
 
     def typeIntoKeyboard(self, text):
