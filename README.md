@@ -77,7 +77,7 @@ dump = device.dump()
 ```
 
 ## UiQuery
-In frank views can be found using a special query specification called "UiQuery". 
+In frank views can be found using a special query language called "UiQuery". 
 
 ###Example:
 ```python
