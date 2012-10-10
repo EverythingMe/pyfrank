@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.2.1'
+version = '0.2.2'
 
 # some trove classifiers:
 
@@ -20,7 +20,7 @@ setup(
     package_dir={'pyfrank': 'src'},
     packages=['pyfrank'],
     description="python binding for iOS automation using frank.",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 4 - Beta',
