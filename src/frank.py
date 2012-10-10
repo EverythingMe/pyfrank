@@ -93,6 +93,9 @@ class Response(object):
     def __getattr__(self, item):
         return self.get(item)
 
+    def __getitem__(self, item):
+        return self.get(item)
+
     @staticmethod
     def parse(data):
         """

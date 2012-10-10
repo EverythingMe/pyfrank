@@ -120,6 +120,20 @@ else:
     print "Failed changing title input"
 ```
 
+## Retrieve a view property
+```python
+view = device.getView(UiQuery({'view':'UILabel'}, { 'marked':'Pull down to refresh...' }))
+
+# Pull out the 'text' attribute. Every attribute exposed by frank can be called as a method on the view to retrieve it's value.
+r = view.text()
+
+if isinstance(r, Success):
+    labelText = r['results'][0]
+
+    print "The text of the UILabel is", labelText
+else:
+    print "I seriously failed to retrieve the UILabel text attribute", r
+```
 
 #More information on frank
 ----------
