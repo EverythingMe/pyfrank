@@ -260,7 +260,7 @@ class Request(object):
         self._complete = Event()
         self._error = None
 
-    def _execute(self, query, data=None, timeout=5):
+    def _execute(self, query, data=None, timeout=15):
         """
         Execute a query to frank
 
