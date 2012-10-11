@@ -124,7 +124,8 @@ else:
 ```python
 view = device.getView(UiQuery({'view':'UILabel'}, { 'marked':'Pull down to refresh...' }))
 
-# Pull out the 'text' attribute. Every attribute exposed by frank can be called as a method on the view to retrieve it's value.
+# 
+# Pull out the 'text' attribute.
 r = view.text()
 
 if isinstance(r, Success):
