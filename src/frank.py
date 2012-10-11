@@ -334,7 +334,7 @@ class Request(object):
         return self._execute(Request.DUMP)
 
     def appExec(self, name, *args):
-        return self._execute(Request.APP_EXEC, str(Operation(name, *args)))
+        return self._execute(Request.APP_EXEC, { 'operation': Operation(name, *args).__dict__ })
 
 
 
@@ -455,6 +455,12 @@ class Device(object):
 
         Returns either Success or Failure
         """
+
+        if name.count(':') != len(args):
+            raise ArgumentError('Objective C method signatures require a colon for each argument supplied')
+
+        if name[len(name)-1] != ':' and len(args) > 0:
+            raise ArgumentError('Objective C method signatures which take parameters must end with a colon')
 
         return Request(self).appExec(name, *args)
 

@@ -59,8 +59,8 @@ device = Device("127.0.0.1", 32765)
 # Type text into the keyboard
 device.typeIntoKeyboard("abc")
 
-# Execute an application on the device
-device.appExec("appName", "arg1", "arg2", ...)
+# Execute a method 
+device.appExec("methodSignature", "arg1", "arg2", ...)
 
 # Get the accesibility state
 accessibilityEnabled = device.accessibilityCheck()
