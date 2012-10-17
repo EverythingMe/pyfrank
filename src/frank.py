@@ -477,7 +477,7 @@ class Device(object):
         data = Request(self).screenshot(subFrame, allWindows).imageData()
 
         if fileName:
-            with open(fileName, 'w') as f:
+            with open(fileName, 'wb') as f:
                 f.write(data)
 
         return data
