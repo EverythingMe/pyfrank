@@ -136,6 +136,11 @@ else:
     print "I seriously failed to retrieve the UILabel text attribute", r
 ```
 
+## Take a screenshot
+```python
+device.screenshot(fileName='snapshot.jpg')
+```
+
 #More information on frank
 ----------
 http://testingwithfrank.com/

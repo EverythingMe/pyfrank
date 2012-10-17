@@ -173,6 +173,19 @@ class Accessibility(Response):
 
 
 
+class Screenshot(Response):
+    def imageData(self):
+        """
+        Returns the byte array of the image. Currently encoded as png
+        """
+        return self.get('image')
+
+    @staticmethod
+    def parse(data):
+        return Screenshot({'image': data})
+
+
+
 
 class Operation(object):
     """
@@ -254,6 +267,7 @@ class Request(object):
     ACCESSIBILITY = ("/accessibility_check", Accessibility.parse)
     DUMP =          ("/dump",                Dump.parse)
     ORIENTATION =   ("/orientation",         Orientation.parse)
+    SCREENSHOT  =   ("/screenshot",          Screenshot.parse)
 
     def __init__(self, device):
         self._device = device
@@ -332,6 +346,18 @@ class Request(object):
 
     def dump(self):
         return self._execute(Request.DUMP)
+
+    def screenshot(self, subFrame=None, allWindows=None):
+        req = Request.SCREENSHOT
+
+        if allWindows:
+            req[0] += '/allwindows'
+
+        if subFrame:
+            req[0] += '/frame/%s' % urllib2.quote(subFrame.encode('utf8') if type(subFrame) == unicode else subFrame)
+
+
+        return self._execute(req)
 
     def appExec(self, name, *args):
         return self._execute(Request.APP_EXEC, { 'operation': Operation(name, *args).__dict__ })
@@ -436,6 +462,26 @@ class Device(object):
         """
 
         Request(self).typeIntoKeyboard(text)
+
+    def screenshot(self, subFrame=None, allWindows=None, fileName=None):
+        """
+        Generates a screenshot of the automated app.
+
+        @param subFrame describes which section of the screen to grab. If unspecified then the entire screen will be captured.
+        @param allWindows If true then all UIWindows in the current UIScreen will be included in the screenshot. If false then only the main window will be captured.
+        @param fileName where to save the screenshot image. If empty, the method will only return the data.
+        @returns a buffer of the png encoded screenshot.
+        """
+
+
+        data = Request(self).screenshot(subFrame, allWindows).imageData()
+
+        if fileName:
+            with open(fileName, 'w') as f:
+                f.write(data)
+
+        return data
+
 
     def accessibilityCheck(self):
         """
