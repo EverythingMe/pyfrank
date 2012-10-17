@@ -141,6 +141,18 @@ else:
 device.screenshot(fileName='snapshot.jpg')
 ```
 
+## Run javascript code inside a WebView
+```python
+view = device.getView(UiQuery('webView', { 'index':0 }))
+
+# Fetch the URL from JS
+url = view.stringByEvaluatingJavaScriptFromString('location.href').results()[0]
+print "URL:", url
+
+# Pop up an alert box
+view.stringByEvaluatingJavaScriptFromString("alert('Hello from pyfrank!')")
+```
+
 #More information on frank
 ----------
 http://testingwithfrank.com/

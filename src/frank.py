@@ -90,6 +90,9 @@ class Response(object):
     def outcome(self):
         return self.get('outcome')
 
+    def results(self):
+        return self.get('results')
+
     def __getattr__(self, item):
         return self.get(item)
 
@@ -391,17 +394,26 @@ class View(object):
         Returns a method proxy lambda for easy of use and code readability.
 
         Example usage:
-        View.touch("a", "b") will transform to View.sendMessage("touch", "a", "b")
+        View.touch("a", "b") will transform to View.sendMessage("touch::", "a", "b")
         """
-        if item[0] != '_':
-            return lambda *k: self.sendMessage(item, *k)
+        if item[0] != '_':           
+            return lambda *k: self.__sendMessage(item, k, True)
 
     def sendMessage(self, method, *args):
+        self.__sendMessage(method, args, False)
+
+    def __sendMessage(self, method, args, fixArgs):
         """
         Send a message to this view
         @param method - The method name
         @param args - Arguments to pass to the method.
         """
+
+        if method.count(':') != len(args):
+            if fixArgs:
+                method += ':'*(len(args)-method.count(':'))
+            else:
+                raise ArgumentError('Objective C method signatures require a colon for each argument supplied')
 
         return Request(self._device).map(self._selector, Operation(method, *args))
 
