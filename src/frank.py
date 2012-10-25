@@ -335,20 +335,20 @@ class Request(object):
             'selector_engine': selector.engine()
         }
 
-        return self._execute(Request.MAP, obj)
+        return self._execute(Request.MAP, obj, self._device._timeout)
 
 
     def typeIntoKeyboard(self, text):
-        return self._execute(Request.TYPE_KEYBOARD, {'text_to_type': text })
+        return self._execute(Request.TYPE_KEYBOARD, {'text_to_type': text }, self._device._timeout)
 
     def accessibilityCheck(self):
-        return self._execute(Request.ACCESSIBILITY)
+        return self._execute(Request.ACCESSIBILITY, None, self._device._timeout)
 
     def getOrientation(self):
-        return self._execute(Request.ORIENTATION)
+        return self._execute(Request.ORIENTATION, None, self._device._timeout)
 
     def dump(self):
-        return self._execute(Request.DUMP)
+        return self._execute(Request.DUMP, None, self._device._timeout)
 
     def screenshot(self, subFrame=None, allWindows=None):
         req = Request.SCREENSHOT
@@ -360,10 +360,10 @@ class Request(object):
             req[0] += '/frame/%s' % urllib2.quote(subFrame.encode('utf8') if type(subFrame) == unicode else subFrame)
 
 
-        return self._execute(req)
+        return self._execute(req, None, self._device._timeout)
 
     def appExec(self, name, *args):
-        return self._execute(Request.APP_EXEC, { 'operation': Operation(name, *args).__dict__ })
+        return self._execute(Request.APP_EXEC, { 'operation': Operation(name, *args).__dict__ }, self._device._timeout)
 
 
 
@@ -432,15 +432,17 @@ class Device(object):
         view = device.getView(UiQuery("tabBarButton", { 'marked': 'Home' }))
         view.touch()
     """
-    def __init__(self, host, port, name='iPhone'):
+    def __init__(self, host, port, timeout=15, name='iPhone'):
         """
         @param host - The hostname or IP address of the device
         @param port - The port frank listens to
-        @param name - The name of the device - for cosmetic purposes
+        @param timeout - Timeout for requests, in seconds.
+        @param name - The name of the device - for cosmetic purposes    
         """
         self._host = host
         self._port = port
         self._name = name
+        self._timeout = timeout
 
     def uri(self):
         return "http://%s:%s" % (self._host, self._port)
